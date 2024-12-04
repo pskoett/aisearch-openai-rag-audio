@@ -226,3 +226,14 @@ class RTMiddleTier:
     
     def attach_to_app(self, app, path):
         app.router.add_get(path, self._websocket_handler)
+
+    async def _process_message_to_client(self, msg, ws, target_ws):
+        message = json.loads(msg)
+        if "response" in message and "output" in message["response"]:
+            output_list = message["response"]["output"]
+            for i in range(len(output_list) - 1, -1, -1):  # Iterate in reverse order
+                if some_condition(output_list[i]):  # Replace with your actual condition
+                    if i < len(output_list):  # Check if index is within range
+                        output_list.pop(i)
+        result = await tool.target(json.loads(args))
+        return result
